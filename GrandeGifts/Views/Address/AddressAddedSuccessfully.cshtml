@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "Address Added Successfully";
+}
+
+<h1>@ViewBag.Title</h1>
+
+<div class="container">
+    <p>You've successfully added this to your account.</p>
+    <hr />
+    <div class="LinkReturnHome">
+        @Html.ActionLink("Return to Manage Profile", "ManageProfile", "Account")
+    </div>
+    <div class="LinkReturnHome">
+        @Html.ActionLink("Return Home", "Index", "Home")
+    </div>
+</div>

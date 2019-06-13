@@ -1,0 +1,630 @@
+﻿
+
+/*--------------------*/
+
+
+
+/*-------------------COLOURS START-------------------*/
+
+/* White - Text:*/
+#SearchBar button:hover, footer {
+    color: white;
+}
+
+.formBox {
+    padding: 20px;
+    border: 1px solid #A7D2CB;
+    border-radius: 5px;
+    align-content: center;
+}
+
+.form-button {
+    color: rgb(250, 249, 238);
+}
+
+.MyNavbarClass a {
+    color: white;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.body-content {
+     /* Needed for fixed headers/menu */
+    padding-bottom: 60px; /* Height of the footer */
+    height: 100%;
+}
+
+.navbar {
+    background-color: #243665;
+}
+
+.footer-container{
+    bottom:0;
+    position:fixed;
+    width:100%;
+}
+
+.wrapper {
+    min-height: 100%;
+    position: relative;
+}
+
+.navbar-nav > li > .dropdown-menu {
+    background-color: #243665;
+}
+
+    .navbar-nav > li > .dropdown-menu a:hover {
+        color: #DF744A;
+        background-image: none;
+        background-color: transparent !important;
+    }
+
+.dropdown-content a:hover {
+    background-color: transparent;
+}
+
+li a {
+    font-family: proxima-nova, sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    color: white;
+    font-size: 1.5em;
+    margin: auto 15px;
+}
+
+.navbar a {
+    color: white;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 80px;
+    background-color: #243665;
+    padding: 15px;
+}
+
+.footer-link {
+    margin: 0;
+    color: rgb(250, 249, 238);
+}
+
+.footer-link a{
+    margin: 0;
+}
+
+.footer-text {
+    margin: 0;
+}
+
+.form-control {
+    border-radius: 0;
+    border-width: 0;
+    background-color: rgba(137,215,190,0.2);
+}
+
+.CompanyStatement {
+    background-color: #DF744A;
+    color: white;
+    padding: 15px;
+}
+
+.CompanyStatement h2 {
+    color: white;
+}
+
+
+.minMaxPrice {
+    display: inline-block;
+    margin: 0;
+}
+
+.container .minMaxForm {
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    background-color: #f2f7ff;
+}
+
+.minMaxPrice label {
+    display: block;
+    float: left;
+}
+
+#filterButton{
+    margin-top: 30px;
+    height: 50px;
+    text-align: center;
+}
+
+
+.searchSubmit{
+    padding: 2px;
+}
+
+
+
+/*White - Background: N/A*/
+/*White - Border: N/A*/
+/*White (<100% Opacity) – Background Colour: N/A*/
+#CollapseButton {
+    background-color: rgba(255,255,255,0.7);
+}
+
+/*Dark Blue - Text:*/
+#SearchInput, #SearchBar button {
+    color: #243665;
+}
+
+.MyNavbarClass a:hover {
+    color: white;
+}
+
+.MyNavbarClass {
+    overflow: hidden;
+    background-color: #e9e9e9;
+}
+
+    .MyNavbarClass a {
+        float: left;
+        display: block;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+    }
+
+        .MyNavbarClass a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .MyNavbarClass a.active {
+            background-color: #2196F3;
+            color: white;
+        }
+
+    .MyNavbarClass .search-container {
+        float: right;
+    }
+
+    .MyNavbarClass input[type=text] {
+        padding: 6px;
+        margin-top: 8px;
+        font-size: 17px;
+        border: none;
+    }
+
+    .MyNavbarClass .search-container button {
+        float: right;
+        padding: 6px 10px;
+        margin-top: 8px;
+        margin-right: 16px;
+        background: #ddd;
+        font-size: 17px;
+        border: none;
+        cursor: pointer;
+    }
+
+        .MyNavbarClass .search-container button:hover {
+            background: #ccc;
+        }
+
+@media screen and (max-width: 600px) {
+    .MyNavbarClass .search-container {
+        float: none;
+    }
+
+        .MyNavbarClass a, .MyNavbarClass input[type=text], .MyNavbarClass .search-container button {
+            float: none;
+            display: block;
+            text-align: left;
+            width: 100%;
+            margin: 0;
+            padding: 14px;
+        }
+
+    .MyNavbarClass input[type=text] {
+        border: 1px solid #ccc;
+    }
+}
+
+
+
+
+/*Dark Blue - Background:*/
+#SearchBar button:hover, form-button:hover {
+    background-color: #243665;
+}
+
+/*Dark Blue – Border:*/
+#SearchBar button {
+    border-color: #243665;
+}
+
+/*Dark Blue (<100% Opacity) – Background Colour: N/A*/
+
+/*Light Green - Text: N/A*/
+
+/*Light Green - Background:*/
+.sidenav {
+    background-color: rgb(250, 249, 238);
+}
+
+/*Light Green – Border: N/A*/
+
+
+.deleteButton{
+    background-color:maroon;
+}
+
+.form-button{
+    color: white;
+}
+
+
+
+/*-------------------COLOURS END-------------------*/
+/*----Register Page----*/
+.customLabel {
+    font-family: 'Montserrat', serif;
+    font-size: 0.7em;
+    font-weight: 700;
+}
+
+.customInput{
+    border-radius:0;
+}
+
+.container-fluid {
+    padding: 0;
+}
+
+.SlideShow{
+    align-content: center;
+    display:none;
+}
+
+    #slideshow img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+    }
+
+.HeroContent{
+    width: 100%;
+    padding: 20px 0;
+}
+
+h2, h3, h4, h5, h6 {
+    font-family: proxima-nova, sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    color: #DF744A
+}
+
+h1 {
+    font-family: proxima-nova, sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    color: white;
+    text-align: center;
+    font-size: 2.5em;
+}
+
+.RenderBody{
+    margin-top: 0;
+}
+
+.headingOneBanner {
+    min-height: 70px;
+    line-height:70px;
+    padding-top: 5px;
+    vertical-align:middle;
+    background-color: #DF744A;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+p, #SearchInput {
+    /*font-family: 'Raleway', sans-serif;
+    font-family: 'Montserrat', sans-serif;
+    font-family: 'Lora', serif;*/
+    font-family: 'Montserrat', serif;
+    font-size: 0.8em;
+}
+
+header {
+    background-color: white;
+}
+
+#TopBanner {
+    height: 35px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+
+#TopBanner a{
+    color: black;
+
+}
+
+#TopBanner li {
+    color: black;
+}
+
+#Logo {
+    height: 40px;
+    margin: 10px;
+    display: block;
+}
+
+#LogoHorizontal {
+    height: 15px;
+    margin-left: 20px;
+    margin-top: 8px;
+}
+
+#slideshow {
+    align-content: center;
+    margin: 10px;
+}
+
+
+
+.MyNavbarClass {
+    font-family: proxima-nova, sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    margin: 0;
+    background-color: #243665;
+}
+
+.NotInUse {
+    color: gray;
+    background-color: #fcfcfc;
+    font-style: italic;
+}
+
+.InUse {
+    background-color: #f7f7f7;
+}
+
+.rowItem {
+    margin: 5px 0px;
+    height: 50px;
+    max-height: 100px;
+    line-height: 50px;
+    vertical-align: middle;
+}
+
+.MyNavbarClass .nav-item a, .MyNavbarClass .nav-list a {
+    padding: 0 15px;
+    
+}
+
+.MyNavbarClass li {
+    margin: 0;
+    height: 100%;
+}
+
+.MyNavbarClass a {
+    font-size: 20px;
+}
+
+#SearchBar button, .MyNavbarClass input {
+    border-width: 1px;
+    font-size: 25px;
+}
+
+#SearchBar button {
+    font-family: proxima-nova, sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    padding: 0 10px;
+    
+}
+
+#SearchInput {
+    padding: 5px 5px 5px 10px;
+    width: 80%;
+    display: block;
+    margin: auto;
+}
+
+.LogoBar {
+    margin: 0;
+    padding: 30px;
+    align-content: center;
+}
+
+#LoginAndCart {
+    font-family: proxima-nova, sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    padding-right: 5px;
+    margin-top:5px;
+}
+
+#LoginAndCart .row {
+
+    float: right;
+    margin: auto;
+}
+
+#LoginAndCart li {
+    display: inline;
+}
+
+    #ShoppingCartNavbarIcon {
+        height: 20px;
+    }
+
+#shoppingCartImage {
+    height: 150px;
+    margin-top: 10px;
+}
+
+
+/* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+.row.content {
+    height: 450px
+}
+
+#shoppingCartButton{
+    margin: 10px;
+}
+
+.cartGrandTotalBlock {
+    border: 1px solid #a0a0a0;
+    background-color: #e8e8e8;
+    border-radius: 3px;
+}
+
+.usernameTopBanner{
+    font-size: 1em;
+}
+
+
+/*Index Page:*/
+.HamperDisplay {
+    height: 300px;
+    background-color: #e2edff;
+    margin-top: 10px;
+}
+
+#PolaroidHeading{
+    height:90px;
+}
+
+.addToCart{
+    margin:5px;
+}
+
+#addAddressButton{
+    margin-bottom: 20px;
+    align-content:center;
+    display:inline-block;
+}
+
+.HamperPolaroid {
+    width: 75%;
+    background-color: #e5e5e5;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin: 10px;
+    height: 320px;
+    object-fit: contain;
+}
+
+.HamperPolaroid p{
+    margin-bottom:5px;
+}
+
+.HamperPolaroid h5 {
+    margin: 2px;
+}
+
+.HamperPolaroid img {
+    bottom:0;
+    margin-bottom: 10px;
+}
+
+#HamperDetailsImage{
+    width: 100%;
+}
+
+
+div.container {
+    text-align: center;
+    padding: 10px 20px;
+}
+
+    .HamperDisplay img {
+        width: 100%;
+        height: 200px;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 10px;
+        object-fit: fill;
+    }
+
+h5 .HamperDisplay {
+    text-align: center;
+    align-content: center;
+}
+
+#Top3Cat {
+    height: 50px;
+    text-align: center;
+    align-content: center;
+    margin: 20px 0px;
+}
+
+.inlineBlock {
+    display: inline-block;
+}
+
+/* Set gray background color and 100% height */
+.sidenav {
+    padding-top: 20px;
+    height: 100%;
+}
+
+/* Set black background color, white text and some padding */
+
+
+/* On small screens, set height to 'auto' for sidenav and grid */
+@media screen and (max-width: 767px) {
+    .sidenav {
+        height: auto;
+        padding: 15px;
+    }
+
+    .row.content {
+        height: auto;
+    }
+}
+
+.form-button {
+    font-family: proxima-nova, sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    font-size: 1em;
+    border: none;
+    background-color: #243665;
+}
+
+#priceSubHeading {
+    font-family: proxima-nova, sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    font-size: 1em;
+    color: black;
+}
+
+.addressBlock {
+    border: 2px solid white;
+    background-color: #f7f7f7;
+}
+
+
+#addressDisplay {
+    height: 150px;
+    margin-bottom: 200px;
+}
+
+#customerProfileForm{
+    margin-bottom: 100px;
+}
+
+#manageProfileForm{
+    margin-bottom: 200px;
+}

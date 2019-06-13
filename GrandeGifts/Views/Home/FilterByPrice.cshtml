@@ -1,0 +1,99 @@
+﻿@model HomeSearchViewModel
+
+@{
+    ViewBag.Title = ViewBag.ResultsFound ? Model.Keyword : "No Results Found";
+}
+
+<div class="headingOneBanner">
+    <h1>@ViewBag.Title</h1>
+</div>
+
+<div class="container">
+    @if (!ViewBag.ResultsFound)
+    {
+        <h4>No results found :(</h4>
+        <p>@Html.ActionLink("Return Home", "Index", "Home")</p>
+    }
+    else
+    {
+        if (Model.Hampers.Count() == 0)
+        {
+        <div class="container">
+            <form asp-controller="Home" asp-action="FilterByPrice" method="post" asp-antiforgery="true">
+                <div asp-validation-summary="ModelOnly"></div>
+
+                <!--Category-->
+                <div class="row">
+                    <div class="col-6 minMaxPrice">
+                        <label asp-for="Keyword" class="customLabel">Category:</label>
+                        <input asp-for="Keyword" class="form-control" />
+                        <span asp-validation-for="Keyword"></span>
+                    </div>
+                    <div class="col-2 minMaxPrice">
+                        <label asp-for="Min" class="customLabel">Min:</label>
+                        <input asp-for="Min" class="form-control" />
+                        <span asp-validation-for="Min"></span>
+                    </div>
+                    <div class="col-2 minMaxPrice">
+                        <label asp-for="Max" class="customLabel">Max:</label>
+                        <input asp-for="Max" class="form-control" />
+                        <span asp-validation-for="Max"></span>
+                    </div>
+                    <div>
+                        <input type="submit" value="Search" class="form-button" />
+                    </div>
+                </div>
+            </form>
+        </div>
+            
+            <h4>No hampers match your criteria, unfortunately :(</h4>
+            <p>@Html.ActionLink("Return Home", "Index", "Home")</p>
+        }
+        else
+        {
+            <div class="container">
+                <form asp-controller="Home" asp-action="FilterByPrice" method="post" asp-antiforgery="true" class="minMaxForm">
+                    <div asp-validation-summary="ModelOnly"></div>
+                    <div class="row">
+                        <div class="col-6 minMaxPrice">
+                            <label asp-for="Keyword" class="customLabel">Category:</label>
+                            <input asp-for="Keyword" class="form-control" />
+                            <span asp-validation-for="Keyword"></span>
+                        </div>
+                        <div class="col-2 minMaxPrice">
+                            <label asp-for="Min" class="customLabel">Min:</label>
+                            <input asp-for="Min" class="form-control" />
+                            <span asp-validation-for="Min"></span>
+                        </div>
+                        <div class="col-2 minMaxPrice">
+                            <label asp-for="Max" class="customLabel">Max:</label>
+                            <input asp-for="Max" class="form-control" />
+                            <span asp-validation-for="Max"></span>
+                        </div>
+                        <div>
+                            <input type="submit" value="Search" id="filterButton" class="form-button" />
+                        </div>
+                    </div>
+                </form>
+
+
+                <div class="row">
+                    @foreach (var h in Model.Hampers)
+                    {
+                        if (h.InUse)
+                        {
+                            {
+                                <div class="col-lg-4 col-md-6 HamperPolaroid">
+                                    <img src=@h.ImageUrl style="width:100%">
+                                    <div class="container">
+                                        <h5>@Html.ActionLink(h.HamperName, "View", "Hamper", new { HamperId = h.HamperId })</h5>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    }
+                </div> 
+            </div>
+        }
+    }
+</div>

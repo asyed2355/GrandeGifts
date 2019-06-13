@@ -1,0 +1,62 @@
+﻿@model CategoryManageViewModel
+
+@{
+    ViewBag.Title = "Manage Categories";
+}
+
+<div class="headingOneBanner">
+    <h1>@ViewBag.Title</h1>
+</div>
+
+<div class="container">
+    <h2>View, update and delete categories.</h2>
+    <hr />
+
+    @if (Model.Categories.Count() == 0)
+    {
+        <p>No categories exist yet :( Why not @Html.ActionLink("Add one?", "Add", "Category")</p>
+    }
+    else
+    {
+        @foreach (var a in Model.Categories)
+        {
+            if (a.InUse)
+            {
+                <div class="row rowItem InUse">
+                    <div class="col-4 col-sm-8 float-left">
+                        <p>@a.CategoryName</p>
+                    </div>
+                    <div class="col-4 col-sm-2 float-right">
+                        <p>@Html.ActionLink("Edit", "Edit", "Category", new { CategoryId = a.CategoryId })</p>
+                    </div>
+                    <div class="col-4 col-sm-2 float-right">
+                        <p>@Html.ActionLink("Delete", "Delete", "Category", new { CategoryId = a.CategoryId })</p>
+                    </div>
+                </div>
+            }
+        }
+
+        @if (@Model.NotInUse > 0)
+        {
+
+            <h4>Not In Use</h4>
+
+            @foreach (var a in Model.Categories)
+            {
+                if (!a.InUse)
+                {
+                    <div class="row rowItem NotInUse">
+                        <div class="col-4 col-sm-8 float-left">
+                            <p>@a.CategoryName</p>
+                        </div>
+                        <div class="col float-right">
+                            <p>@Html.ActionLink("Re-activate", "Reactivate", "Category", new { CategoryId = a.CategoryId })</p>
+                        </div>
+                    </div>
+                }
+            }
+        }
+        <hr />
+        <button class="form-button">@Html.ActionLink("Add Category", "Add", "Category")</button>
+    }
+</div>

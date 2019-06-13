@@ -1,0 +1,78 @@
+﻿@model HamperEditViewModel
+
+@{
+    ViewBag.Title = "Add A New Hamper";
+}
+
+<div class="headingOneBanner">
+    <h1>@ViewBag.Title</h1>
+</div>
+
+<div class="container">
+
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        <form asp-controller="Hamper" asp-action="Edit" method="post" asp-antiforgery="true">
+            <div asp-validation-summary="ModelOnly"></div>
+
+            <!--(Hidden Field) Hamper Id-->
+            <div>
+                <input asp-for="HamperId" type="hidden" />
+            </div>
+
+            <!--(Hidden Field) Category Id-->
+            <div>
+                <input asp-for="CategoryId" type="hidden" />
+            </div>
+
+            <!--Hamper Name-->
+            <div>
+                <label asp-for="HamperName" class="customLabel">Hamper Name:</label>
+                <input asp-for="HamperName" class="form-control" value=@Model.HamperName />
+                <span asp-validation-for="HamperName"></span>
+            </div>
+
+            <!--Products-->
+            <div>
+                <label asp-for="Products" class="customLabel">Products:</label>
+                <textarea asp-for="Products" class="form-control" value=@Model.Products ></textarea>
+                <span asp-validation-for="Products"></span>
+            </div>
+
+            <!--Description-->
+            <div>
+                <label asp-for="Description" class="customLabel">Description:</label>
+                <textarea asp-for="Description" class="form-control" value=@Model.Description ></textarea>
+                <span asp-validation-for="Description"></span>
+            </div>
+
+            <!--Price-->
+            <div>
+                <label asp-for="Price" class="customLabel">Price:</label>
+                <input asp-for="Price" class="form-control" value=@Model.Price />
+                <span asp-validation-for="Price"></span>
+            </div>
+
+            <!--Supplier-->
+            <div>
+                <label asp-for="Supplier" class="customLabel">Supplier:</label>
+                <input asp-for="Supplier" class="form-control" value=@Model.Supplier />
+                <span asp-validation-for="Supplier"></span>
+            </div>
+
+            <!--Image URL-->
+            <div>
+                <label asp-for="ImageUrl" class="customLabel"><i>(Optional) Image URL:</i></label>
+                <input asp-for="ImageUrl" class="form-control" value=@Model.ImageUrl />
+                <span asp-validation-for="ImageUrl"></span>
+            </div>
+
+            <hr />
+
+            <!--SUBMIT-->
+            <div>
+                <input type="submit" value="Update Hamper" class="form-button" />
+            </div>
+        </form>
+    </div>
+</div>

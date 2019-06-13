@@ -1,0 +1,96 @@
+﻿@model AccountManageProfileViewModel
+
+@{
+    ViewBag.Title = "Manage Profile";
+}
+
+<div class="headingOneBanner">
+    <h1>@ViewBag.Title</h1>
+</div>
+
+<div class="container">
+    <p>Update your account information here.</p>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group" id="manageProfileForm">
+        <form asp-controller="Account" asp-action="ManageProfile" method="post" asp-antiforgery="true" id="customerProfileForm">
+            <div asp-validation-summary="ModelOnly"></div>
+            <!--Username-->
+            <div>
+                <label asp-for="UserName" class="customLabel">Username:</label>
+                <input asp-for="UserName" class="form-control disabledInputBox" value=@Model.UserName disabled />
+                <span asp-validation-for="UserName"></span>
+            </div>
+            <!--Email-->
+            <div>
+                <label asp-for="Email" class="customLabel">Email:</label>
+                <input asp-for="Email" class="form-control" value=@Model.Email />
+                <span asp-validation-for="Email"></span>
+            </div>
+            <hr />
+            <!--Name-->
+            <div>
+                <label asp-for="GivenNames" class="customLabel">Given Name/s:</label>
+                <input asp-for="GivenNames" class="form-control" value=@Model.GivenNames>
+                <span asp-validation-for="GivenNames"></span>
+            </div>
+            <div>
+                <label asp-for="Surname" class="customLabel">Surname:</label>
+                <input asp-for="Surname" class="form-control" value=@Model.Surname>
+                <span asp-validation-for="Surname"></span>
+            </div>
+            <!--Phone Number-->
+            <div>
+                <label asp-for="PhoneNo" class="customLabel">Phone Number:</label>
+                <input asp-for="PhoneNo" class="form-control" value=@Model.PhoneNo />
+                <span asp-validation-for="PhoneNo"></span>
+            </div>
+
+            <!--SUBMIT-->
+            <div>
+                <input type="submit" value="Update Profile" class="form-button" />
+            </div>
+
+            <hr />
+            @if (User.IsInRole("Customer"))
+            {
+                <h3>Addresses:</h3>
+                <div class="row" id="addAddressButton">
+                    <button class="form-button">@Html.ActionLink("Add Address", "AddCustomer", "Address")</button>
+                </div>
+            }
+            else
+            {
+                <h3>Address:</h3>
+            }
+
+            <div class="row" id="addressDisplay">
+                @foreach (var a in Model.Addresses)
+                {
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 addressBlock">
+                        @if (a.PreferredShippingAddress)
+                        {
+                            <h6 class="customLabel">Preferred Address:</h6>
+                        }
+                        else
+                        {
+                            <br />
+                        }
+                        <p><strong>@a.StreetAddress</strong></p>
+                        <p>@a.Suburb, @a.State, @a.Postcode</p>
+                        <p>@Html.ActionLink("Edit", "CustomerEdit", "Address", new { AddressId = a.AddressId })</p>
+                        <p>@Html.ActionLink("Delete", "CustomerDelete", "Address", new { AddressId = a.AddressId })</p>
+                    </div>
+                }
+            </div>
+        </form>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+</div>

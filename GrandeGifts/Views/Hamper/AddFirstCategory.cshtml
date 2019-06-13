@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "No Categories Exist";
+}
+
+<div class="headingOneBanner">
+    <h1>@ViewBag.Title</h1>
+</div>
+
+<div class="container">
+    <p>Before you can add a hamper you'll need to make sure there's at least one category in the system first.</p>
+    <p>If you wish to add a hamper, ensure that you first @Html.ActionLink("Add a Category", "Add", "Category").</p>
+    <hr />
+    <div class="LinkReturnHome">
+        <p>@Html.ActionLink("Add a Category", "Add", "Category")</p>
+    </div>
+
+    <div class="LinkReturnHome">
+        <p>@Html.ActionLink("Return Home", "Index", "Home")</p>
+    </div>
+</div>

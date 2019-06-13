@@ -1,0 +1,77 @@
+﻿@model CategoryEditViewModel
+@{
+    ViewBag.Title = "Edit Category";
+}
+
+<div class="headingOneBanner">
+    <h1>@ViewBag.Title</h1>
+</div>
+
+<div class="container">
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        <form asp-controller="Category" asp-action="Edit" method="post" asp-antiforgery="true">
+            <div asp-validation-summary="ModelOnly"></div>
+
+            <!--Category Name-->
+            <div>
+                <label asp-for="CategoryName" class="customLabel">Category Name:</label>
+                <input asp-for="CategoryName" class="form-control" value=@Model.CategoryName />
+                <span asp-validation-for="CategoryName"></span>
+            </div>
+
+            <!--Description-->
+            <div>
+                <label asp-for="Description" class="customLabel">Description:</label>
+                <textarea asp-for="Description" class="form-control" value=@Model.Description></textarea>
+                <span asp-validation-for="Description"></span>
+            </div>
+
+            <!--Image URL-->
+            <div>
+                <label asp-for="ImageUrl" class="customLabel"><i>(Optional) Image URL:</i></label>
+                <input asp-for="ImageUrl" class="form-control" value=@Model.ImageUrl />
+                <span asp-validation-for="ImageUrl"></span>
+            </div>
+
+            <hr />
+
+            <!--SUBMIT-->
+            <div>
+                <input type="submit" value="Update Category" class="form-button" />
+            </div>
+        </form>
+    </div>
+    <hr />
+
+    @if (ViewBag.HampersExist)
+    {
+        <h4>Hampers in @Model.CategoryName:</h4>
+        <hr />
+        foreach (var h in ViewBag.Hampers)
+        {
+            if (h.InUse)
+            {
+                <div class="row rowItem InUse">
+                    <div class="col-4 col-sm-8 float-left">
+                        <p>@h.HamperName</p>
+                    </div>
+                    <div class="col-4 col-sm-2 float-right">
+                        <p>@Html.ActionLink("Edit", "Edit", "Hamper", new { HamperId = h.HamperId })</p>
+                    </div>
+                    <div class="col-4 col-sm-2 float-right">
+                        <p>@Html.ActionLink("Delete", "Delete", "Hamper", new { HamperId = h.HamperId })</p>
+                    </div>
+                </div>
+            }
+        }
+        <br />
+        <div>
+            <button type="button" class="form-button">@Html.ActionLink("Add Hamper", "Add", "Hamper", new { CategoryId = Model.CategoryId })</button>
+        </div>
+    }
+    else
+    {
+        <p>This category has no hampers :( Why not @Html.ActionLink("Add A Hamper", "Add", "Hamper")?</p>
+    }
+</div>

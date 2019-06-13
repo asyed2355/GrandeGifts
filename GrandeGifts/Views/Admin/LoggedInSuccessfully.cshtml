@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "You've Successfully Logged In";
+}
+
+<div class="headingOneBanner">
+    <h1>@ViewBag.Title</h1>
+</div>
+
+<div class="container">
+    <p>Now go and do some admin stuff ;)</p>
+    <hr />
+    <div class="LinkReturnHome">
+        @Html.ActionLink("Return Home", "Index", "Home")
+    </div>
+</div>

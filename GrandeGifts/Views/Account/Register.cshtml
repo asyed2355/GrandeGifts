@@ -1,0 +1,109 @@
+﻿@model AccountRegisterViewModel
+
+@{
+    ViewBag.Title = "Sign Up!";
+}
+
+<div class="headingOneBanner">
+    <h1>@ViewBag.Title</h1>
+</div>
+
+<div class="container">
+
+    <div id="DirectToAdminPage">
+        <br />
+        <p>Are you an Administrator? @Html.ActionLink("Go to the Administrator Login Page.", "Login", "Admin")</p>
+    </div>
+
+    <hr />
+
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        <form asp-controller="Account" asp-action="Register" method="post" asp-antiforgery="true">
+            <div asp-validation-summary="ModelOnly"></div>
+            <!--Username-->
+            <div class="formBox">
+                <div>
+                    <label asp-for="UserName" class="customLabel">Username:</label>
+                    <input asp-for="UserName" class="form-control" />
+                    <span asp-validation-for="UserName"></span>
+                </div>
+                <!--Email-->
+                <div>
+                    <label asp-for="Email" class="customLabel">Email Address:</label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email"></span>
+                </div>
+                <hr />
+                <!--Name-->
+                <div>
+                    <label asp-for="GivenNames" class="customLabel">Given Name/s:</label>
+                    <input asp-for="GivenNames" class="form-control" />
+                    <span asp-validation-for="GivenNames"></span>
+                </div>
+
+                <div>
+                    <label asp-for="Surname" class="customLabel">Surname:</label>
+                    <input asp-for="Surname" class="form-control" />
+                    <span asp-validation-for="Surname"></span>
+                </div>
+                <!--Password-->
+                <div>
+                    <label asp-for="Password" class="customLabel">Password:</label>
+                    <input asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password"></span>
+                </div>
+                <!--Confirm Password-->
+                <div>
+                    <label asp-for="ComparePassword" class="customLabel">Confirm Password:</label>
+                    <input asp-for="ComparePassword" class="form-control" />
+                    <span asp-validation-for="ComparePassword"></span>
+                </div>
+                <hr />
+                <!--ADDRESS FIELDS-->
+                <!--Address Type-->
+                <h3>Shipping Address</h3>
+                <p>Don't worry, you'll be able to add more addresses to your profile in future.</p>
+                <div>
+                    <label asp-for="AddressType" class="customLabel">Address Type:</label>
+                    <select asp-for="AddressType">
+                        <option value="Home" asp-for="AddressType">Home</option>
+                        <option value="Work" asp-for="AddressType">Work</option>
+                    </select>
+                </div>
+
+                <!--Street Address-->
+                <div>
+                    <label asp-for="StreetAddress" class="customLabel">Street Address:</label>
+                    <input asp-for="StreetAddress" class="form-control" />
+                    <span asp-validation-for="StreetAddress"></span>
+                </div>
+                <!--Suburb-->
+                <div>
+                    <label asp-for="Suburb" class="customLabel">Suburb:</label>
+                    <input asp-for="Suburb" class="form-control" />
+                    <span asp-validation-for="Suburb"></span>
+                </div>
+                <!--State-->
+                <div>
+                    <label asp-for="State" class="customLabel">State:</label>
+                    <input asp-for="State" class="form-control" />
+                    <span asp-validation-for="State"></span>
+                </div>
+                <!--Postcode-->
+                <div>
+                    <label asp-for="Postcode" class="customLabel">Postcode:</label>
+                    <input asp-for="Postcode" class="form-control" />
+                    <span asp-validation-for="Postcode"></span>
+                </div>
+
+                <hr />
+
+                <!--SUBMIT-->
+                <div>
+                    <input type="submit" value="Register" class="form-button" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

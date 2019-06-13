@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "No Categories Exist";
+}
+
+<div class="headingOneBanner">
+    <h1>@ViewBag.Title</h1>
+</div>
+
+<div class="container">
+    <p>No categories exist yet :(</p>
+    <hr/>
+    <div class="LinkReturnHome">
+        <p>@Html.ActionLink("Add a Category", "Add", "Category")</p>
+    </div>
+
+    <div class="LinkReturnHome">
+        <p>@Html.ActionLink("Return Home", "Index", "Home")</p>
+    </div>
+</div>

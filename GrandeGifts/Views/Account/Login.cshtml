@@ -1,0 +1,37 @@
+﻿@model AccountLoginViewModel
+
+<div class="headingOneBanner">
+    <h1>@ViewBag.Title</h1>
+</div>
+
+<div class="container">
+    <div id="DirectToAdminPage">
+        <p>Are you an Administrator? @Html.ActionLink("Login as an Administrator.", "Login", "Admin")</p>
+    </div>
+
+    <hr />
+    <div class="form-group">
+        <form asp-controller="Account" asp-action="Login" method="post" asp-antiforgery="true">
+            <div class="formBox">
+                <div asp-validation-summary="ModelOnly"></div>
+                <!--Username-->
+                <div>
+                    <label asp-for="UserName" class="customLabel">Username:</label>
+                    <input asp-for="UserName" class="form-control" />
+                    <span asp-validation-for="UserName"></span>
+                </div>
+                <!--Password-->
+                <div>
+                    <label asp-for="Password" class="customLabel">Password:</label>
+                    <input asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password"></span>
+                </div>
+
+                <!--SUBMIT-->
+                <div>
+                    <input type="submit" value="Login" class="form-button" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

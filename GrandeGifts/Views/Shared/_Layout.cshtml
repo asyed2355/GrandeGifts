@@ -1,0 +1,227 @@
+﻿@using System.Security
+@using Microsoft.AspNetCore.Http
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <!--"Responsive meta tag" from Bootstrap's Introduction documentation-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>@ViewBag.Title</title>
+
+    <!--Bootstrap CSS Sheet-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!--Font awesome layout-->
+    <link rel="stylesheet"
+          href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
+          integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
+          crossorigin="anonymous">
+
+    <!--FONTS:-->
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="https://use.typekit.net/jkn1ezr.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="https://cdn.rawgit.com/mfd/f3d96ec7f0e8f034cc22ea73b3797b59/raw/856f1dbb8d807aabceb80b6d4f94b464df461b3e/gotham.css">
+
+    <link href="https://fonts.googleapis.com/css?family=Crimson+Text:400,400i,600,600i,700,700i" rel="stylesheet">
+
+
+    <!--Custom Stylesheet-->
+    <link href="~/CustomStyles.css" rel="stylesheet" />
+    @RenderSection("scriptsMap", required: false)
+
+    <style>
+        #map {
+            width: 100%;
+            height: 400px;
+            background-color: grey;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <!-- TOP BANNER - Logo and backdrop-->
+        <header id="HeaderAndNavbar">
+            <div id="TopBanner" class="content">
+                <div class="row mr-0">
+                    <div class="col-4 float-left">
+                        <img id="LogoHorizontal" src="~/assets/Logo-horizontal.png" />
+                    </div>
+
+                    
+                        <div class="col-3 mr-0 float-right d-none d-sm-block" id="LoginAndCart">
+                            <ul class="float-right">
+                                <a href='@Url.Action("ViewCart", "ShoppingCart")'>
+                                    <li><img id="ShoppingCartNavbarIcon" src="~/assets/shopping-cart-icon.png" /></li>
+                                </a>
+                                    @if (string.IsNullOrEmpty(Context.Session.GetString("_NumberOfItemsInCart")))
+                                    {
+                                        <li>$0.00 (0 items)</li>
+                                    }
+                                    else if (Context.Session.GetString("_NumberOfItemsInCart") == "1")
+                                    {
+                                        <li>@Context.Session.GetString("_TotalPrice") (1 item)</li>
+                                    }
+                                    else
+                                    {
+                                        <li>@Context.Session.GetString("_TotalPrice") (@Context.Session.GetString("_NumberOfItemsInCart") items)</li>
+                                    }
+
+                            </ul>
+                        </div>
+                    
+
+                    <div class="col-5 mr-0 float-right d-none d-sm-block" id="LoginAndCart">
+                        <ul class="LoginLogutNavBar">
+                            @if (User.IsInRole("Customer"))
+                            {
+                                <li class="usernameTopBanner">Welcome @User.Identity.Name</li>
+                                <li> | </li>
+                                <li class="usernameTopBanner">@Html.ActionLink("Logout", "Logout", "Account")</li>
+                            }
+                            else if (User.IsInRole("Admin"))
+                            {
+                                <li class="usernameTopBanner">Welcome @User.Identity.Name</li>
+                                <li> | </li>
+                                <li class="usernameTopBanner">@Html.ActionLink("Logout", "Logout", "Admin")</li>
+                            }
+                            else
+                            {
+                                <li class="usernameTopBanner">@Html.ActionLink("Sign Up", "Register", "Account")</li>
+                                <li> | </li>
+                                <li class="usernameTopBanner">@Html.ActionLink("Login", "Login", "Account")</li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+
+        <!--Navbar START-->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+            <a class="navbar-brand" href="#">
+                <div class="float-left">
+                    <img id="Logo" src="~/assets/Logo-White.png" />
+                </div>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        @Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("Browse By Category", "ViewAll", "Category", null, new { @class = "nav-link" })
+                    </li>
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Profile
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                @Html.ActionLink("View Profile", "ManageProfile", "Admin", null, new { @class = "dropdown-item" })
+                                @Html.ActionLink("Register An Admin", "RegisterAdmin", "Admin", null, new { @class = "dropdown-item" })
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Categories
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                @Html.ActionLink("Add", "Add", "Category", null, new { @class = "dropdown-item" })
+                                @Html.ActionLink("Manage", "Manage", "Category", null, new { @class = "dropdown-item" })
+                            </div>
+                        </li>
+                    }
+                    else if (User.IsInRole("Customer"))
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Profile
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                @Html.ActionLink("Profile", "ManageProfile", "Account", null, new { @class = "dropdown-item" })
+                            </div>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            @Html.ActionLink("Sign Up", "Register", "Account", null, new { @class = "nav-link" })
+                        </li>
+                    }
+                    @if (!string.IsNullOrEmpty(Context.Session.GetString("_NumberOfItemsInCart")))
+                    {
+                    <li class="nav-item">
+                        @Html.ActionLink("View Cart", "ViewCart", "ShoppingCart", null, new { @class = "nav-link" })
+                    </li>
+                    }
+                </ul>
+                <form class="form-inline my-2 my-lg-0" method="post" asp-action="Search" name="Keyword" asp-controller="Home" asp-antiforgery="true">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search By Category..." aria-label="Search" name="Keyword">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+        <!--Navbar END-->
+
+        <div class="renderBody">
+            <div class="row content ">
+                <div class="col-12 text-left">
+                    <div class="body-content">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+            <!-- Footer -->
+
+            <div class="footer-container push">
+                <footer class="col-12 footer">
+                    <div class="row">
+                        <div class="float-left col-2">
+                            <img id="Logo" src="~/assets/Logo-White.png" />
+                        </div>
+                        <div class="float-left col-3">
+                            <p class="footer-link"><u>GRANDE GIFTS</u></p>
+                            <p>© Copyright Grande Gifts | Adam Syed, 2019</p>
+                        </div>
+                        <div class="float-left col-3">
+                            <p class="footer-link"><a href="#">Copyright Notice</a></p>
+                            <p class="footer-link"><a href="#">Privacy Policy</a></p>
+                            <p class="footer-link"><a href="#">Terms of Use</a></p>
+                        </div>
+                        <div class="float-left col-4">
+                            <p class="footer-text"><a href="#"><u>Contact Us</u></a></p>
+                            <p class="footer-text">27 Crystal St,</p>
+                            <p class="footer-text">Petersham, NSW, 2049</p>
+                        </div>
+                    </div>
+
+
+                </footer>
+            </div>
+        </div>
+
+        <!--Bootstrap JS links:-->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "Access Denied";
+}
+
+<h1>@ViewBag.Title</h1>
+
+<div class="container">
+    <p>You are <strong>not registered as an Administrator</strong>.</p>
+    <div class="LinkReturnHome">
+        <p>Are you registered as a customer? @Html.ActionLink("Go to the Customer Login Page", "Login", "Account")</p>
+    </div>
+    <hr />
+    <div class="LinkReturnHome">
+        @Html.ActionLink("Return Home", "Index", "Home")
+    </div>
+</div>

@@ -1,0 +1,36 @@
+﻿@model List<HamperViewByCategoryViewModel>
+
+@{
+    ViewBag.Title = ViewBag.HampersExist ? ViewBag.CategoryName : "No Hampers Found";
+}
+
+<div class="headingOneBanner">
+    <h1>@ViewBag.Title</h1>
+</div>
+
+<div class="container">
+    @if (ViewBag.HampersExist)
+    {
+        <div class="row">
+            @foreach (HamperViewByCategoryViewModel h in Model)
+            {
+                {
+            <div class="col-lg-3 col-md-5 HamperPolaroid">
+                <div class="container" id="PolaroidHeading">
+                    <h5>@Html.ActionLink(h.HamperName, "ViewDetails", "Hamper", new { HamperId = h.HamperId })</h5>
+                    <p><strong>$@h.Price</strong></p>
+                </div>
+                <img src=@h.ImageUrl style="width:100%">
+                <br />
+                <button class="form-button addToCart">@Html.ActionLink("Add To Cart", "AddToCart", "ShoppingCart", new { HamperId = @h.HamperId })</button>
+            </div>
+                }
+            }
+        </div>
+    }
+    else
+    {
+        <h4>This category doesn't have any hampers yet, unfortunately.</h4>
+        <h5>It needs to step its game up!</h5>
+    }
+</div>

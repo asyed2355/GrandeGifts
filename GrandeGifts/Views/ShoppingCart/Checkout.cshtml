@@ -1,0 +1,132 @@
+﻿@model ShoppingCartCheckoutViewModel
+
+@{
+    ViewBag.Title = "Checkout";
+}
+
+<div class="headingOneBanner">
+    <h1>@ViewBag.Title</h1>
+</div>
+
+<div class="container">
+    <div class="row content">
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+
+        @if (ViewBag.LoggedIn)
+        {
+            @if (ViewBag.UserHasAddress)
+            {
+                @if (User.IsInRole("Admin"))
+                {
+                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                        <div id="addressDisplay">
+                            <h3>Shipping Address:</h3>
+                            <p><i>@Model.PreferredAddress.AddressType address</i></p>
+                            <p><strong>@Model.PreferredAddress.StreetAddress</strong></p>
+                            <p>@Model.PreferredAddress.Suburb</p>
+                            <p>@Model.PreferredAddress.State</p>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                        <div id="addressDisplay">
+                            <h3>Shipping Information:</h3>
+                            <h6>Your Preferred Shipping Address:</h6>
+                            <p><i>@Model.PreferredAddress.AddressType address</i></p>
+                            <p><strong>@Model.PreferredAddress.StreetAddress</strong></p>
+                            <p>@Model.PreferredAddress.Suburb</p>
+                            <p>@Model.PreferredAddress.State</p>
+                            <p><i><strong>@Html.ActionLink("Select an alternative", "ChangeShippingAddress", "Address")</strong></i></p>
+                        </div>
+                       
+                    </div>
+                }
+            }
+            else
+            {
+                <h5>You don't have an address stored on your profile yet!</h5>
+                @if (User.IsInRole("Admin"))
+                {
+                    <h6>@Html.ActionLink("Add An Address To Your Profile", "ManageProfile", "Admin")</h6>
+                }
+                else
+                {
+                    <h6>@Html.ActionLink("Add An Address To Your Profile", "AddCustomer", "Address")</h6>
+                }
+            }
+        }
+        else
+        {
+            <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <h3>Shipping Address:</h3>
+                    <p>Are you a member? If not, why not @Html.ActionLink("sign up", "Register", "Account")?!</p>
+                    <form>
+                        <div>
+                            <label class="customLabel">Street Address:</label>
+                            <input class="form-control" />
+                        </div>
+
+                        <div>
+                            <label class="customLabel">Suburb:</label>
+                            <input class="form-control" />
+                        </div>
+
+                        <div>
+                            <label class="customLabel">State:</label>
+                            <input class="form-control" />
+                        </div>
+
+                        <div>
+                            <label class="customLabel">Postcode:</label>
+                            <input class="form-control" />
+                        </div>
+
+                        <br />
+                    </form>
+                </div>
+            </div>
+        }
+        <hr />
+        <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+            <div class="form-group">
+                <h3>Payment Details:</h3>
+                <form>
+                    <div>
+                        <label class="customLabel">Name On Card:</label>
+                        <input class="form-control" />
+                    </div>
+
+                    <div>
+                        <label class="customLabel">Card Number:</label>
+                        <input class="form-control" />
+                    </div>
+
+                    <div>
+                        <label class="customLabel">Name on Card:</label>
+                        <input class="form-control" />
+                    </div>
+
+                    <div>
+                        <label class="customLabel">Valid Until</label>
+                        <input class="form-control" />
+                    </div>
+
+                    <div>
+                        <label class="customLabel">CVC Code:</label>
+                        <input class="form-control" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row content">
+        <div class="col-12">
+            <button class="form-button">CONFIRM ORDER</button>
+        </div>
+    </div>
+    <br/>
+    <br/>
+</div>

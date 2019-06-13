@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "Category Added Successfully";
+}
+
+<div class="headingOneBanner">
+    <h1>@ViewBag.Title</h1>
+</div>
+
+<div class="container">
+    <div class="LinkReturnHome">
+        <p>@Html.ActionLink("Return to Manage Categories", "Manage", "Category")</p>
+    </div>
+    <div class="LinkReturnHome">
+        <p>@Html.ActionLink("Add Another Category", "Add", "Category")</p>
+    </div>
+    <div class="LinkReturnHome">
+        <p>@Html.ActionLink("Add a Hamper", "Add", "Hamper")</p>
+    </div>
+    <div class="LinkReturnHome">
+        <p>@Html.ActionLink("Return Home", "Index", "Home")</p>
+    </div>
+</div>

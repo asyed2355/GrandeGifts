@@ -1,0 +1,98 @@
+﻿@model AdminManageProfileViewModel
+
+@{
+    ViewBag.Title = "Manage Profile";
+}
+
+<div class="headingOneBanner">
+    <h1>@ViewBag.Title</h1>
+</div>
+
+<div class="container">
+    <h3>Update your account information here.</h3>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        <form asp-controller="Admin" asp-action="ManageProfile" method="post" asp-antiforgery="true">
+            <div class="formBox">
+                <div asp-validation-summary="ModelOnly"></div>
+                <!--Username/Email (they're the same for admins)-->
+                <div>
+                    <label asp-for="Email" class="customLabel">Username:</label>
+                    <input asp-for="Email" class="form-control disabledInputBox" value=@Model.Email disabled />
+                    <span asp-validation-for="Email"></span>
+                </div>
+                <!--Email-->
+                <div>
+                    <label asp-for="Email" class="customLabel">Email:</label>
+                    <input asp-for="Email" class="form-control" value=@Model.Email />
+                    <span asp-validation-for="Email"></span>
+                </div>
+                <hr />
+                <!--Name-->
+                <div>
+                    <label asp-for="GivenNames" class="customLabel">Given Name/s:</label>
+                    <input asp-for="GivenNames" class="form-control" value=@Model.GivenNames>
+                    <span asp-validation-for="GivenNames"></span>
+                </div>
+                <div>
+                    <label asp-for="Surname" class="customLabel">Surname:</label>
+                    <input asp-for="Surname" class="form-control" value=@Model.Surname>
+                    <span asp-validation-for="Surname"></span>
+                </div>
+                <!--Phone Number-->
+                <div>
+                    <label asp-for="PhoneNo" class="customLabel">Phone Number:</label>
+                    <input asp-for="PhoneNo" class="form-control" value=@Model.PhoneNo />
+                    <span asp-validation-for="PhoneNo"></span>
+                </div>
+            </div>
+
+            <hr />
+
+
+            <!-- Address -->
+            @if (@ViewBag.userHasAddress)
+            {
+                <h5>Address:</h5>
+            }
+            else
+            {
+                <h5>It looks like you haven't added an address yet! :O</h5>
+                <h5><strong>Please add your address to your profile.</strong></h5>
+                <br />
+            }
+            <div class="formBox">
+                <!--Street Address-->
+                <div>
+                    <label asp-for="StreetAddress" class="customLabel">Street Address:</label>
+                    <input asp-for="StreetAddress" class="form-control" id="streetAddress" />
+                    <span asp-validation-for="StreetAddress"></span>
+                </div>
+                <!--Suburb-->
+                <div>
+                    <label asp-for="Suburb" class="customLabel">Suburb:</label>
+                    <input asp-for="Suburb" class="form-control" id="suburb" />
+                    <span asp-validation-for="Suburb"></span>
+                </div>
+                <!--State-->
+                <div>
+                    <label asp-for="State" class="customLabel">State:</label>
+                    <input asp-for="State" class="form-control" id="state" />
+                    <span asp-validation-for="State"></span>
+                </div>
+                <!--Postcode-->
+                <div>
+                    <label asp-for="Postcode" class="customLabel">Postcode:</label>
+                    <input asp-for="Postcode" class="form-control" />
+                    <span asp-validation-for="Postcode"></span>
+                </div>
+            </div>
+            <br />
+            <!--SUBMIT-->
+            <div>
+                <input type="submit" value="Update Profile" class="form-button" />
+            </div>
+        </form>
+    </div>
+</div>

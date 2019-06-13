@@ -1,0 +1,34 @@
+﻿@model AdminLoginViewModel
+
+@{
+    ViewBag.Title = "Login | Administrator";
+}
+
+<div class="headingOneBanner">
+    <h1>@ViewBag.Title</h1>
+</div>
+
+<div class="container">
+    <div class="form-group formBox">
+    <form asp-controller="Admin" asp-action="Login" method="post" asp-antiforgery="true">
+        <div asp-validation-summary="ModelOnly"></div>
+        <!--Username-->
+        <div>
+            <label asp-for="Email" class="customLabel">Email:</label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email"></span>
+        </div>
+        <!--Password-->
+        <div>
+            <label asp-for="Password" class="customLabel">Password:</label>
+            <input asp-for="Password" class="form-control" />
+            <span asp-validation-for="Password"></span>
+        </div>
+        <br/>
+        <!--SUBMIT-->
+        <div>
+            <input type="submit" value="Login" class="form-button" />
+        </div>
+    </form>
+    </div>
+</div>

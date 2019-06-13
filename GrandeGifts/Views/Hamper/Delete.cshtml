@@ -1,0 +1,29 @@
+﻿@model HamperDeleteViewModel
+
+@{
+    ViewBag.Title = "Delete Hamper";
+}
+
+<div class="headingOneBanner">
+    <h1>@ViewBag.Title</h1>
+</div>
+
+<div class="container">
+    <h3>Are you sure you want to delete @Model.HamperName?</h3>
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        <form asp-controller="Hamper" asp-action="Delete" method="post" asp-antiforgery="true">
+            <div asp-validation-summary="ModelOnly"></div>
+
+            <!--(Hidden Field) Hamper Id-->
+            <div>
+                <input asp-for="HamperId" type="hidden" />
+            </div>
+
+            <!--SUBMIT-->
+            <div>
+                <input type="submit" value="Yes, Delete @Model.HamperName" class="form-button deleteButton" />
+            </div>
+        </form>
+    </div>
+</div>

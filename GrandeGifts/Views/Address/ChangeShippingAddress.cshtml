@@ -1,0 +1,27 @@
+﻿@model List<AddressChangeShippingAddressViewModel>
+
+@{
+    ViewBag.Title = "Change Preferred Shipping Address";
+}
+
+<div class="headingOneBanner">
+    <h1>@ViewBag.Title</h1>
+</div>
+
+<div class="container">
+    <div class="row" id="addressDisplay">
+        @foreach (AddressChangeShippingAddressViewModel a in Model)
+        {
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 addressBlock">
+                @if (a.PreferredShippingAddress)
+                {
+                    <h6 class="customLabel">Preferred Address:</h6>
+                }
+                <p><strong>@a.StreetAddress</strong></p>
+                <p>@a.Suburb, @a.State, @a.Postcode</p>
+                <button class="form-button">@Html.ActionLink("Select", "ChangeShippingAddressSuccessful", "Address", new { AddressId = @a.AddressId })</button>
+            </div>
+        }
+    </div>
+    <button class="form-button">@Html.ActionLink("Go Back To Checkout", "Checkout", "ShoppingCart")</button>
+</div>

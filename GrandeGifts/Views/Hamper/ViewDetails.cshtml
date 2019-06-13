@@ -1,0 +1,31 @@
+﻿@model HamperViewDetailsViewModel
+@{
+    ViewBag.Title = ViewBag.HamperFound ? Model.HamperName : "Hamper Not Found";
+}
+
+<div class="headingOneBanner">
+    <h1>@ViewBag.Title</h1>
+</div>
+
+<div class="container">
+    @if (ViewBag.HamperFound)
+    {
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+
+    <div class="row content">
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <img src="@Model.ImageUrl" id="HamperDetailsImage" />
+            <br/>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <h6 id="priceSubHeading"><strong>@Model.Price</strong></h6>
+            <button class="form-button">@Html.ActionLink("Add To Cart", "AddToCart", "ShoppingCart", new { HamperId = @Model.HamperId })</button>
+            <br />
+            <hr />
+            <p>@Model.Description</p>
+            <h6>Products</h6>
+            <p>@Model.Products</p>
+        </div>
+    </div>
+    }
+</div>

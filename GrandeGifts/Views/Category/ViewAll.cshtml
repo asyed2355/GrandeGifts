@@ -1,0 +1,25 @@
+﻿@model CategoryViewAllViewModel
+
+@{
+    ViewBag.Title = "Browse Categories";
+}
+
+<div class="headingOneBanner">
+    <h1>@ViewBag.Title</h1>
+</div>
+
+<div class="container">
+    <div class="row">
+        @foreach (var c in Model.Categories)
+        {
+            {
+                <div class="col-lg-3 col-md-6 HamperPolaroid">
+                    <div class="container">
+                        <h5>@Html.ActionLink(c.CategoryName, "ViewByCategory", "Hamper", new { CategoryId = c.CategoryId })</h5>
+                    </div>
+                    <img src=@c.ImageUrl style="width:100%">           
+                </div>
+            }
+        }
+    </div>
+</div>
