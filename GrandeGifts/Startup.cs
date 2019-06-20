@@ -10,6 +10,7 @@ using GrandeGifts.Models;
 using System.Threading.Tasks;
 using GrandeGifts.Data_Access;
 using GrandeGifts.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace GrandeGifts
 {
@@ -51,17 +52,19 @@ namespace GrandeGifts
             services.AddScoped<IDataService<Address>, DataService<Address>>();
             services.AddScoped<IDataService<Hamper>, DataService<Hamper>>();
             services.AddScoped<IDataService<ShoppingCartItem>, DataService<ShoppingCartItem>>();
+            services.AddScoped<IDataService<Order>, DataService<Order>>();
+            services.AddScoped<IDataService<LineItem>, DataService<LineItem>>();
 
-            /*
+
             services.AddDbContext<ApplicationDbContext>(options =>
             // Rather than hard-code the connection string here, we'll use the one in the config file that we've set up.
             options.UseSqlServer(_config.GetConnectionString("DefaultConnection")));
-            */
+
 
             services.AddSession(options =>
             {
                 // Set a short timeout for easy testing.
-                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.IdleTimeout = TimeSpan.FromMinutes(15);
                 options.Cookie.HttpOnly = false;
             });
 
@@ -80,7 +83,7 @@ namespace GrandeGifts
             ).AddEntityFrameworkStores<ApplicationDbContext>()
              .AddDefaultTokenProviders();
 
-            services.AddDbContext<ApplicationDbContext>();
+            //services.AddDbContext<ApplicationDbContext>();
             /*
             services.AddAuthentication()
             .AddFacebook(options =>

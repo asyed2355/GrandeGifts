@@ -25,11 +25,17 @@
                             <p><strong>@Model.PreferredAddress.StreetAddress</strong></p>
                             <p>@Model.PreferredAddress.Suburb</p>
                             <p>@Model.PreferredAddress.State</p>
+                            <form asp-controller="ShoppingCart" asp-action="CheckoutSuccesful" method="post" asp-antiforgery="true">
+                                <div asp-validation-summary="ModelOnly"></div>
+                                <div>
+                                    <input type="submit" value="SUBMIT ORDER" class="form-button" />
+                                </div>
+                            </form>
                         </div>
                     </div>
-                }
-                else
-                {
+                        }
+                        else
+                        {
                     <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
                         <div id="addressDisplay">
                             <h3>Shipping Information:</h3>
@@ -40,12 +46,17 @@
                             <p>@Model.PreferredAddress.State</p>
                             <p><i><strong>@Html.ActionLink("Select an alternative", "ChangeShippingAddress", "Address")</strong></i></p>
                         </div>
-                       
+                        <form asp-controller="ShoppingCart" asp-action="CheckoutSuccesful" method="post" asp-antiforgery="true">
+                            <div asp-validation-summary="ModelOnly"></div>
+                            <div>
+                                <input type="submit" value="SUBMIT ORDER" class="form-button" />
+                            </div>
+                        </form>
                     </div>
+                        }
                 }
-            }
-            else
-            {
+                else
+                {
                 <h5>You don't have an address stored on your profile yet!</h5>
                 @if (User.IsInRole("Admin"))
                 {
@@ -55,78 +66,78 @@
                 {
                     <h6>@Html.ActionLink("Add An Address To Your Profile", "AddCustomer", "Address")</h6>
                 }
-            }
-        }
-        else
-        {
-            <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
-                <div class="form-group">
-                    <h3>Shipping Address:</h3>
-                    <p>Are you a member? If not, why not @Html.ActionLink("sign up", "Register", "Account")?!</p>
-                    <form>
-                        <div>
-                            <label class="customLabel">Street Address:</label>
-                            <input class="form-control" />
-                        </div>
+                }
+                }
+                else
+                {
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+                <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <form asp-controller="ShoppingCart" asp-action="CheckoutSuccesful" method="post" asp-antiforgery="true">
+                            <div asp-validation-summary="ModelOnly"></div>
+                            <h3>Shipping Address:</h3>
+                            <p>Are you a member? If not, why not @Html.ActionLink("sign up", "Register", "Account")?!</p>
+                            <div>
+                                <label class="customLabel" asp-for="PreferredAddress.StreetAddress">Street Address:</label>
+                                <input class="form-control" asp-for="PreferredAddress.StreetAddress" />
+                            </div>
 
-                        <div>
-                            <label class="customLabel">Suburb:</label>
-                            <input class="form-control" />
-                        </div>
+                            <div>
+                                <label class="customLabel" asp-for="PreferredAddress.Suburb">Suburb:</label>
+                                <input class="form-control" asp-for="PreferredAddress.Suburb" />
+                            </div>
 
-                        <div>
-                            <label class="customLabel">State:</label>
-                            <input class="form-control" />
-                        </div>
+                            <div>
+                                <label class="customLabel" asp-for="PreferredAddress.State">State:</label>
+                                <input class="form-control" asp-for="PreferredAddress.State" />
+                            </div>
 
-                        <div>
-                            <label class="customLabel">Postcode:</label>
-                            <input class="form-control" />
-                        </div>
-
-                        <br />
-                    </form>
+                            <div>
+                                <label class="customLabel" asp-for="PreferredAddress.Postcode">Postcode:</label>
+                                <input class="form-control" asp-for="PreferredAddress.Postcode" />
+                            </div>
+                            <div>
+                                <input type="submit" value="SUBMIT ORDER" class="form-button" />
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </div>
-        }
-        <hr />
-        <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
-            <div class="form-group">
-                <h3>Payment Details:</h3>
-                <form>
-                    <div>
-                        <label class="customLabel">Name On Card:</label>
-                        <input class="form-control" />
-                    </div>
+                }
+                        <!--SUBMIT-->
 
-                    <div>
-                        <label class="customLabel">Card Number:</label>
-                        <input class="form-control" />
-                    </div>
+                        <hr />
+                        <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <h3>Payment Details:</h3>
+                                <form>
+                                    <div>
+                                        <label class="customLabel">Name On Card:</label>
+                                        <input class="form-control" />
+                                    </div>
 
-                    <div>
-                        <label class="customLabel">Name on Card:</label>
-                        <input class="form-control" />
-                    </div>
+                                    <div>
+                                        <label class="customLabel">Card Number:</label>
+                                        <input class="form-control" />
+                                    </div>
 
-                    <div>
-                        <label class="customLabel">Valid Until</label>
-                        <input class="form-control" />
-                    </div>
+                                    <div>
+                                        <label class="customLabel">Name on Card:</label>
+                                        <input class="form-control" />
+                                    </div>
 
-                    <div>
-                        <label class="customLabel">CVC Code:</label>
-                        <input class="form-control" />
+                                    <div>
+                                        <label class="customLabel">Valid Until</label>
+                                        <input class="form-control" />
+                                    </div>
+
+                                    <div>
+                                        <label class="customLabel">CVC Code:</label>
+                                        <input class="form-control" />
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <div class="row content">
-        <div class="col-12">
-            <button class="form-button">CONFIRM ORDER</button>
-        </div>
-    </div>
-    <br/>
-    <br/>
-</div>
+                    <br />
+                    <br />
+                </div>

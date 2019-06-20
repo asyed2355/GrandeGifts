@@ -56,10 +56,11 @@
                     if (h.InUse)
                     {
                         {
-                            <div class="col-lg-4 col-md-6 HamperPolaroid">
+                            <div class="col-lg-4 col-md-6 HamperPolaroid" id="searchHamper">
                                 <img src=@h.ImageUrl style="width:100%">
                                 <div class="container">
-                                    <h5>@Html.ActionLink(h.HamperName, "View", "Hamper", new { HamperId = h.HamperId })</h5>
+                                    <p><strong>$@h.Price</strong></p>
+                                    <h5>@Html.ActionLink(h.HamperName, "ViewDetails", "Hamper", new { HamperId = h.HamperId })</h5>
                                 </div>
                             </div>
                         }

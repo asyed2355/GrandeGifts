@@ -8,7 +8,7 @@ namespace GrandeGifts.ViewModels.Hamper
         public int HamperId { get; set; }
         [Required]
         public string HamperName { get; set; }
-        [Required]
+        [Range(0, 1000)]
         public double Price { get; set; }
         [Required]
         public string Products { get; set; }

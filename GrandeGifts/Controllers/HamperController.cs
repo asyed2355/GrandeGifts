@@ -155,7 +155,7 @@ namespace GrandeGifts.Controllers
             }
             else
             {
-                return View();
+                return View(VM);
             }
         }
 

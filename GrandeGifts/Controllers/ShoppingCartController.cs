@@ -11,6 +11,7 @@ using GrandeGifts.ViewModels.ShoppingCart;
 using Microsoft.AspNetCore.Identity;
 using System.Web.Http;
 using NonActionAttribute = Microsoft.AspNetCore.Mvc.NonActionAttribute;
+using System;
 
 namespace GrandeGifts.Controllers
 {
@@ -19,11 +20,14 @@ namespace GrandeGifts.Controllers
         private const string cartKey = "_ShoppingCart";
         private const string items = "_NumberOfItemsInCart";
         private const string totalPrice = "_TotalPrice";
+        private const string userAddress = "_UserAddress";
 
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IDataService<Address> _addressService;
         private readonly IDataService<Hamper> _hamperService;
         private readonly IDataService<ShoppingCartItem> _shoppingCartService;
+        private readonly IDataService<Order> _orderService;
+        private readonly IDataService<LineItem> _lineItemService;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private ISession _session => _httpContextAccessor.HttpContext.Session;
 
@@ -33,12 +37,16 @@ namespace GrandeGifts.Controllers
                                       IDataService<Address> A,
                                       IDataService<Hamper> H,
                                       IDataService<ShoppingCartItem> S,
+                                      IDataService<Order> O,
+                                      IDataService<LineItem> L,
                                       IHttpContextAccessor httpContextAccessor)
         {
             _userManager = U;
             _addressService = A;
             _hamperService = H;
             _shoppingCartService = S;
+            _orderService = O;
+            _lineItemService = L;
             _textFormatter = new TextFormatter();
             _httpContextAccessor = httpContextAccessor;
         }
@@ -64,7 +72,7 @@ namespace GrandeGifts.Controllers
         [NonAction]
         public void updateShoppingCart(List<ShoppingCartItem> shoppingCartItemList)
         {
-            double cartBalance = calculateTotalPrice(shoppingCartItemList, 1, false);
+            double cartBalance = calculateTotalPrice(shoppingCartItemList, 1, true);
 
             var serialisedShoppingCart = JsonConvert.SerializeObject(shoppingCartItemList);
 
@@ -180,6 +188,7 @@ namespace GrandeGifts.Controllers
                 List<ShoppingCartViewViewModel> VM = new List<ShoppingCartViewViewModel>();
 
                 double totalPriceLessDelivery = calculateTotalPrice(shoppingCart, 1, false);
+                double totalPrice = totalPriceLessDelivery + 7.5;
 
                 foreach (ShoppingCartItem item in shoppingCart)
                 {
@@ -196,7 +205,8 @@ namespace GrandeGifts.Controllers
 
                     VM.Add(VM_Item);
                 }
-                ViewBag.TotalPrice = totalPriceLessDelivery;
+                ViewBag.Subtotal = totalPriceLessDelivery;
+                ViewBag.Total = totalPrice;
                 return View(VM);
             }
             return View();
@@ -237,7 +247,8 @@ namespace GrandeGifts.Controllers
 
             ShoppingCartCheckoutViewModel VM = new ShoppingCartCheckoutViewModel
             {
-                PriceLessDelivery = calculateTotalPrice(shoppingCart, 1, true),
+                TotalPrice = calculateTotalPrice(shoppingCart, 1, false),
+                PriceMinusDelivery = calculateTotalPrice(shoppingCart, 1, true),
                 shoppingCartItems = shoppingCart
             };
 
@@ -256,11 +267,103 @@ namespace GrandeGifts.Controllers
                 }
                 else if (User.IsInRole("Admin"))
                 {
-                    VM.PreferredAddress = userAddresses.FirstOrDefault();
+                    Address preferredAddress = userAddresses.FirstOrDefault();
+                    VM.PreferredAddress = preferredAddress;
+
+                    // Set current address to session:
+                    var serialisedAddress = JsonConvert.SerializeObject(preferredAddress);
+                    HttpContext.Session.SetString(userAddress, serialisedAddress);
                 }
                 else
                 {
-                    VM.PreferredAddress = userAddresses.Where(y => y.PreferredShippingAddress).FirstOrDefault();
+                    Address preferredAddress = userAddresses.Where(y => y.PreferredShippingAddress).FirstOrDefault();
+                    VM.PreferredAddress = preferredAddress;
+
+                    // Set current address to session:
+                    var serialisedAddress = JsonConvert.SerializeObject(preferredAddress);
+                    HttpContext.Session.SetString(userAddress, serialisedAddress);
+                }
+            }
+            return View(VM);
+        }
+
+        [AllowAnonymous]
+        [System.Web.Http.HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CheckoutSuccesful(ShoppingCartCheckoutViewModel VM)
+        {
+            if (ModelState.IsValid)
+            {
+                if (retrieveCartFromSession().Count() > 0)
+                {
+                    Guid orderId = new Guid();
+                    Order currentOrder = new Order();
+
+                    currentOrder.OrderId = orderId;
+
+                    List<ShoppingCartItem> shoppingCartItems = retrieveCartFromSession();
+                    List<LineItem> orderItems = new List<LineItem>();
+
+                    foreach (ShoppingCartItem item in shoppingCartItems)
+                    {
+                        LineItem orderItem = new LineItem
+                        {
+                            OrderId = orderId,
+                            HamperId = item.Hamper.HamperId,
+                            Quantity = item.Quantity
+                        };
+                        orderItems.Add(orderItem);
+                    }
+
+                    // Add ListItems to order:
+                    currentOrder.ShoppingCartItems = orderItems;
+
+                    //Retrieve user's address from session (if logged in):
+                    if (User.Identity.IsAuthenticated)
+                    {
+                        // Add User ID:
+                        string UserName = User.Identity.Name;
+                        ApplicationUser user = _userManager.Users.FirstOrDefault(x => x.UserName == UserName);
+                        currentOrder.UserId = user.Id;
+
+                        // Retrieve address from session:
+                        var addressInSession = HttpContext.Session.GetString(userAddress);
+                        Address shippingAddress = JsonConvert.DeserializeObject<Address>(addressInSession);
+
+                        // Add address details to order:
+                        currentOrder.StreetAddress = shippingAddress.StreetAddress;
+                        currentOrder.Suburb = shippingAddress.Suburb;
+                        currentOrder.State = shippingAddress.State;
+                        currentOrder.Postcode = shippingAddress.Postcode;
+                    }
+                    else
+                    {
+                        // Add [No User] ID:
+                        currentOrder.UserId = null;
+
+                        // Add address details to order directly from VM:
+                        currentOrder.StreetAddress = VM.PreferredAddress.StreetAddress;
+                        currentOrder.Suburb = VM.PreferredAddress.Suburb;
+                        currentOrder.State = VM.PreferredAddress.State;
+                        currentOrder.Postcode = VM.PreferredAddress.Postcode;
+                    }
+
+                    // Update order price:
+                    currentOrder.Price = calculateTotalPrice(shoppingCartItems, 1, true);
+                    // Add current date:
+                    currentOrder.DateOrdered = DateTime.Now;
+                    // Update order in DB:
+                    _orderService.Create(currentOrder);
+                    // Update list items in DB:
+                    _lineItemService.UpdateMultiple(orderItems);
+                    // Clear session:
+                    HttpContext.Session.Clear();
+
+                    return RedirectToAction("OrderProcessedSuccessfully", "Order");
+                }
+                else
+                {
+                    return RedirectToAction("ViewCart", "ShoppingCart");
                 }
             }
             return View(VM);

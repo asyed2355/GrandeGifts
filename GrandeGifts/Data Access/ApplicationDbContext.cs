@@ -10,13 +10,15 @@ namespace GrandeGifts.Data_Access
         public DbSet<Address> TblAddresses { get; set; }
         public DbSet<Hamper> TblHampers { get; set; }
         public DbSet<Category> TblCategories { get; set; }
+        public DbSet<Category> TblOrders { get; set; }
+        public DbSet<LineItem> TblLineItems { get; set; }
 
-        /*
+        
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
 
         }
-        */
+        /*
 
         protected override void OnConfiguring(DbContextOptionsBuilder option)
         {
@@ -25,25 +27,30 @@ namespace GrandeGifts.Data_Access
             //TAFE:
             option.UseSqlServer(@"Server=PC10-12;Database=GrandeGifts;Trusted_Connection=True;MultipleActiveResultSets=true");
         }
+        */
 
         protected override void OnModelCreating(ModelBuilder B)
         {
+            
             base.OnModelCreating(B);
 
-            /*
-            B.Entity<HamperProduct>()
-                .HasKey(x => new { x.HamperId, x.ProductId });
+            B.Entity<LineItem>()
+                .HasKey(x => new { x.HamperId, x.OrderId });
 
-            B.Entity<HamperProduct>()
-                .HasOne(x => x.Hamper)
-                .WithMany(y => y.Products)
+            B.Entity<Order>();
+
+            /*
+            B.Entity<LineItem>()
+                .HasOne(x => x.Order)
+                .WithMany(y => y.ShoppingCartItems)
                 .HasForeignKey(z => z.HamperId);
 
-            B.Entity<HamperProduct>()
+            B.Entity<LineItem>()
                     .HasOne(x => x.Product)
                     .WithMany(y => y.Hampers)
                     .HasForeignKey(z => z.ProductId);
-            */
-        }
+                    */
+
+        }    
     }
 }

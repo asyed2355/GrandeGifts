@@ -35,8 +35,8 @@
         <div class="row" id="addressDisplay">
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 cartGrandTotalBlock">
                 <br />
-                <h4><strong>Total: $@ViewBag.TotalPrice</strong></h4>
-                <p><i>(+ $7.50 postage and handling)</i></p>
+                <h4><strong>Total: $@ViewBag.Total</strong></h4>
+                <p><i>($@ViewBag.Subtotal + $7.50 postage and handling)</i></p>
                 <hr />
                 <button class="form-button" id="shoppingCartButton">@Html.ActionLink("Proceed To Checkout", "Checkout", "ShoppingCart")</button>
                 <br />

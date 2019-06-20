@@ -47,7 +47,6 @@
 </head>
 
 <body>
-    <div class="container-fluid">
         <!-- TOP BANNER - Logo and backdrop-->
         <header id="HeaderAndNavbar">
             <div id="TopBanner" class="content">
@@ -55,8 +54,6 @@
                     <div class="col-4 float-left">
                         <img id="LogoHorizontal" src="~/assets/Logo-horizontal.png" />
                     </div>
-
-                    
                         <div class="col-3 mr-0 float-right d-none d-sm-block" id="LoginAndCart">
                             <ul class="float-right">
                                 <a href='@Url.Action("ViewCart", "ShoppingCart")'>
@@ -74,7 +71,6 @@
                                     {
                                         <li>@Context.Session.GetString("_TotalPrice") (@Context.Session.GetString("_NumberOfItemsInCart") items)</li>
                                     }
-
                             </ul>
                         </div>
                     

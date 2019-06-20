@@ -10,11 +10,14 @@ using Microsoft.AspNetCore.Identity;
 using GrandeGifts.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
+using Newtonsoft.Json;
 
 namespace GrandeGifts.Controllers
 {
     public class AddressController : Controller
     {
+        private const string userAddress = "_UserAddress";
+
         private IDataService<Address> _addressService;
         private UserManager<ApplicationUser> _userManager;
         private TextFormatter _textFormatter;
@@ -222,6 +225,11 @@ namespace GrandeGifts.Controllers
         {
             Guid Id = Guid.Parse(AddressId);
             Address newPreferredAddress = _addressService.GetSingle(x => x.AddressId == Id);
+
+            // Set current address to session:
+            var serialisedAddress = JsonConvert.SerializeObject(newPreferredAddress);
+            HttpContext.Session.SetString(userAddress, serialisedAddress);
+
             string UserName = User.Identity.Name;
             ApplicationUser user = _userManager.Users.FirstOrDefault(x => x.UserName == UserName);
 

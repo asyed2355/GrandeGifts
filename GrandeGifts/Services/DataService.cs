@@ -13,9 +13,9 @@ namespace GrandeGifts.Services
         private ApplicationDbContext _context;
         private DbSet<T> _dbSet;
 
-        public DataService()
+        public DataService(ApplicationDbContext context)
         {
-            _context = new ApplicationDbContext();
+            _context = context;
             _dbSet = _context.Set<T>();
         }
 

@@ -125,7 +125,7 @@ namespace GrandeGifts.Migrations
 
                     b.HasKey("CategoryId");
 
-                    b.ToTable("TblCategories");
+                    b.ToTable("Category");
                 });
 
             modelBuilder.Entity("GrandeGifts.Models.Hamper", b =>
@@ -157,6 +157,45 @@ namespace GrandeGifts.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("TblHampers");
+                });
+
+            modelBuilder.Entity("GrandeGifts.Models.LineItem", b =>
+                {
+                    b.Property<int>("HamperId");
+
+                    b.Property<Guid>("OrderId");
+
+                    b.Property<int>("Quantity");
+
+                    b.HasKey("HamperId", "OrderId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("TblLineItems");
+                });
+
+            modelBuilder.Entity("GrandeGifts.Models.Order", b =>
+                {
+                    b.Property<Guid>("OrderId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("DateOrdered");
+
+                    b.Property<int>("Postcode");
+
+                    b.Property<double>("Price");
+
+                    b.Property<string>("State");
+
+                    b.Property<string>("StreetAddress");
+
+                    b.Property<string>("Suburb");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("OrderId");
+
+                    b.ToTable("Order");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -281,6 +320,14 @@ namespace GrandeGifts.Migrations
                     b.HasOne("GrandeGifts.Models.Category")
                         .WithMany("HamperList")
                         .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("GrandeGifts.Models.LineItem", b =>
+                {
+                    b.HasOne("GrandeGifts.Models.Order")
+                        .WithMany("ShoppingCartItems")
+                        .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

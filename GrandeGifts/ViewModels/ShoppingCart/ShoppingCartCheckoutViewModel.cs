@@ -13,7 +13,8 @@ namespace GrandeGifts.ViewModels.ShoppingCart
         public GrandeGifts.Models.Address PreferredAddress { get; set; }
 
         // Shopping Cart Items:
-        public double PriceLessDelivery { get; set; }
+        public double TotalPrice { get; set; }
+        public double PriceMinusDelivery { get; set; }
         public static double DeliveryFee
         {
             get
